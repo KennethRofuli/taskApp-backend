@@ -133,6 +133,20 @@ router.route("/update/:id")
         }
     });
 
+// Get task by ID
+router.get("/:id", async (req, res) => {
+  try {
+    const task = await Task.findById(req.params.id);
+    if (!task) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+    res.json(task);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
 // Route to delete a task by its ID.
 // Handles DELETE requests to '/api/tasks/delete/:id'.
 router.route("/delete/:id")
